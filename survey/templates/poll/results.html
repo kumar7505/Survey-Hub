@@ -43,27 +43,18 @@
 				state.values.push(value)
 			}
 			console.log(state)
+			buildChart()
 		}
 	})
 	function buildChart(){
 		var charData = {
 			"type": "bar",
 			"scale-x":{
-				"values":[
-					"Dennis",
-					"Erik",
-					"Tim",
-				]
+				"values":state.items
 			},
-			"series":[
-				{
-					"values":[
-						25, 
-						23, 
-						27
-					]
-				}
-			]
+			"series":[{
+				"values":state.values
+			}]
 		}
 
 		zingchart.render({
