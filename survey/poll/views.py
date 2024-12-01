@@ -2,6 +2,7 @@ from django.shortcuts import render, Http404, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Question, Choice
 from django.urls import reverse
+from django.http import JsonResponse
 # Create your views here.
 
 def index(request):
@@ -40,3 +41,14 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('poll:results', args=(question.id,)))
+    
+def resultData(request, obj):
+    voteData = []
+    question = Question.objects.get(id=obj)
+    votes = question.choice_set.all()
+
+    for i in votes:
+        voteData.append({i.choice_text : i.votes})
+
+    print(voteData)
+    return JsonResponse(voteData, safe=False)
