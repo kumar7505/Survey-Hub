@@ -22,6 +22,10 @@
 <a class="btn btn-dark" href="{% url 'poll:detail' question.id %}">Vote again?</a>
 
 <script>
+	var state = {
+		'items': [],
+		'values': [],
+	}
 
 	var objId = "{{question.id}}"
 
@@ -31,32 +35,42 @@
 		url: dataURL,
 		success: function(response){
 			console.log("Response", response)
+			for(var i in response){
+				var key = Object.keys(response[i])[0]
+				var value = Object.values(response[i])[0]
+
+				state.items.push(key)
+				state.values.push(value)
+			}
+			console.log(state)
 		}
 	})
-	var charData = {
-		"type": "bar",
-		"scale-x":{
-			"values":[
-				"Dennis",
-				"Erik",
-				"Tim",
-			]
-		},
-		"series":[
-			{
+	function buildChart(){
+		var charData = {
+			"type": "bar",
+			"scale-x":{
 				"values":[
-					25, 
-					23, 
-					27
+					"Dennis",
+					"Erik",
+					"Tim",
 				]
-			}
-		]
-	}
+			},
+			"series":[
+				{
+					"values":[
+						25, 
+						23, 
+						27
+					]
+				}
+			]
+		}
 
-	zingchart.render({
-		id: "myChart",
-		data: charData
-	});
+		zingchart.render({
+			id: "myChart",
+			data: charData
+		});
+	}
 
 </script>
 {% endblock %}
