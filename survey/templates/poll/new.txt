@@ -1,0 +1,4 @@
+a-tag      -      <!-- href="{% url 'poll:index' %}" -->
+
+
+form-tag         -         <!-- action="{% url 'poll:vote' question.id %}" -->
